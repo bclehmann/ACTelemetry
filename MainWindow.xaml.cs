@@ -81,8 +81,8 @@ namespace AssettoCorsaTelemetryApp
 			sigplotGear.maxRenderIndex = index;
 			sigplotSteer.maxRenderIndex = index;
 
-			plotFrameGas.plt.Axis(0, index - 1, -1.2, 1.2);
-			plotFrameBrake.plt.Axis(0, index - 1, -1.2, 1.2);
+			plotFrameGas.plt.Axis(0, index - 1, -0.2, 1.2);
+			plotFrameBrake.plt.Axis(0, index - 1, -0.2, 1.2);
 			plotFrameGear.plt.Axis(0, index - 1, -2, 10);
 			plotFrameSteer.plt.Axis(0, index - 1, -1.2, 1.2);
 

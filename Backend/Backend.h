@@ -1,7 +1,7 @@
 #pragma once
 
 
-#define export extern "C" __declspec(dllexport)
+#define dllpub extern "C" __declspec(dllexport)
 
 struct basics{
 	float gas;
@@ -74,6 +74,6 @@ struct PhysicsMemoryMap
 	float localVelocity[3];
 };
 
-export PhysicsMemoryMap* get_physics();
-export void initialize_physics();
-export void free_physics();
+dllpub PhysicsMemoryMap* get_physics();
+dllpub void initialize_physics();
+dllpub void free_physics();

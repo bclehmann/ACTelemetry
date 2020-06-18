@@ -58,10 +58,10 @@ namespace AssettoCorsaTelemetryApp
 			dataSteer= new double[bufferSize];
 
 			plotFrameGas.plt.Clear();
-			sigplotGas = plotFrameGas.plt.PlotSignal(dataGas);
-			sigplotBrake = plotFrameBrake.plt.PlotSignal(dataBrake);
-			sigplotGear = plotFrameGear.plt.PlotSignal(dataGear);
-			sigplotSteer= plotFrameSteer.plt.PlotSignal(dataSteer);
+			sigplotGas = plotFrameGas.plt.PlotSignal(dataGas, color: System.Drawing.Color.FromArgb(255, 25, 150, 0));
+			sigplotBrake = plotFrameBrake.plt.PlotSignal(dataBrake, color : System.Drawing.Color.FromArgb(255, 200, 0, 0));
+			sigplotGear = plotFrameGear.plt.PlotSignal(dataGear, color : System.Drawing.Color.Black);
+			sigplotSteer= plotFrameSteer.plt.PlotSignal(dataSteer, color : System.Drawing.Color.FromArgb(255, 100, 0, 200));
 
 			updateTimer = new DispatcherTimer();
 			updateTimer.Interval = TimeSpan.FromMilliseconds(sleepTime);

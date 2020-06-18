@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "AssettoCorsaTelemetryApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DLLDirectoryRelease": "C:\\Users\\benny\\source\\repos\\AssettoCorsaTelemetryApp\\Release",
+        "DLLDirectoryDebug": "C:\\Users\\benny\\source\\repos\\AssettoCorsaTelemetryApp\\Release"
+      }
+    }
+  }
+}

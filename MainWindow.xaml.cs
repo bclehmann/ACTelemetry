@@ -81,10 +81,10 @@ namespace AssettoCorsaTelemetryApp
 			sigplotGear.maxRenderIndex = index;
 			sigplotSteer.maxRenderIndex = index;
 
-			plotFrameGas.plt.Axis(0, index - 1);
-			plotFrameBrake.plt.Axis(0, index - 1);
-			plotFrameGear.plt.Axis(0, index - 1);
-			plotFrameSteer.plt.Axis(0, index - 1);
+			plotFrameGas.plt.Axis(0, index - 1, -1.2, 1.2);
+			plotFrameBrake.plt.Axis(0, index - 1, -1.2, 1.2);
+			plotFrameGear.plt.Axis(0, index - 1, -2, 10);
+			plotFrameSteer.plt.Axis(0, index - 1, -1.2, 1.2);
 
 			plotFrameGas.Render();
 			plotFrameBrake.Render();
@@ -100,7 +100,7 @@ namespace AssettoCorsaTelemetryApp
 
 		private void Update(object sender, EventArgs e)
 		{
-			if (index > bufferSize) {
+			if (index >= bufferSize) {
 				index = 0;
 			}
 			PhysicsData.PhysicsMemoryMap x = PhysicsData.GetPhysics();

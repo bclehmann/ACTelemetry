@@ -10,24 +10,27 @@
 		>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
-		<WpfPlot Name="plotFrameGas" Grid.Row="0" Grid.Column="0"/>
-		<WpfPlot Name="plotFrameBrake" Grid.Row="1" Grid.Column="0"/>
-		<WpfPlot Name="plotFrameGear" Grid.Row="2" Grid.Column="0"/>
-		<WpfPlot Name="plotFrameSteer" Grid.Row="3" Grid.Column="0"/>
 
-		<DockPanel Grid.Row="4" Grid.Column="0" LastChildFill="False">
+		<DockPanel Grid.Row="0" Grid.Column="0" LastChildFill="False" Margin="40, 10, 8, 10">
 			<Button Click="StartLogging_Click" DockPanel.Dock="Left" Margin="2, 0, 5, 0">Start</Button>
 			<Button Click="StopLogging_Click" DockPanel.Dock="Left" Margin="2, 0, 5, 0">Stop</Button>
+			<Button Click="PageLink_Click" Margin="2, 0, 5, 0" DockPanel.Dock="Right">
+				<TextBlock Text="Project Page"/>
+			</Button>
 		</DockPanel>
+
+		<WpfPlot Name="plotFrameGas" Grid.Row="1" Grid.Column="0"/>
+		<WpfPlot Name="plotFrameBrake" Grid.Row="2" Grid.Column="0"/>
+		<WpfPlot Name="plotFrameGear" Grid.Row="3" Grid.Column="0"/>
+		<WpfPlot Name="plotFrameSteer" Grid.Row="4" Grid.Column="0"/>
 	</Grid>
 </Window>

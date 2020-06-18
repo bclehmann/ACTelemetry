@@ -112,5 +112,15 @@ namespace AssettoCorsaTelemetryApp
 			index++;
 			Thread.Sleep(sleepTime);
 		}
+
+		private void PageLink_Click(object sender, RoutedEventArgs e)
+		{
+			using (Process proc = new Process())
+			{
+				proc.StartInfo.FileName = "https://github.com/Benny121221/AssettoCorsaTelemetryApp";
+				proc.StartInfo.UseShellExecute = true;
+				proc.Start();
+			}
+		}
 	}
 }

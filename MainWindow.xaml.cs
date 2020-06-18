@@ -32,6 +32,8 @@ namespace AssettoCorsaTelemetryApp
 		double[] dataGear;
 		double[] dataSteer;
 		int index = 0;
+		int[] dataLap;
+
 		DispatcherTimer updateTimer;
 		DispatcherTimer renderTimer;
 		ScottPlot.PlottableSignal sigplotGas;
@@ -42,7 +44,11 @@ namespace AssettoCorsaTelemetryApp
 		public MainWindow()
 		{
 			InitializeComponent();
+
 			PhysicsData.InitializePhysics();
+			GraphicsData.InitializeGraphics();
+			SamplingRate_TextBlock.Text = $"Logging Frequency: {1 / (sleepTime / 1000f):f3} Hz";
+
 			plotFrameGas.plt.Title("Throttle");
 			plotFrameBrake.plt.Title("Brake");
 			plotFrameGear.plt.Title("Gear");
@@ -56,6 +62,7 @@ namespace AssettoCorsaTelemetryApp
 			dataBrake= new double[bufferSize];
 			dataGear= new double[bufferSize];
 			dataSteer= new double[bufferSize];
+			dataLap = new int[bufferSize];
 
 			plotFrameGas.plt.Clear();
 			sigplotGas = plotFrameGas.plt.PlotSignal(dataGas, color: System.Drawing.Color.FromArgb(255, 25, 150, 0));
@@ -103,11 +110,23 @@ namespace AssettoCorsaTelemetryApp
 			if (index >= bufferSize) {
 				index = 0;
 			}
-			PhysicsData.PhysicsMemoryMap x = PhysicsData.GetPhysics();
-			dataGas[index] = x.gas;
-			dataBrake[index] = x.brake;
-			dataGear[index] = x.gear - 1;
-			dataSteer[index] = x.steerAngle;
+			PhysicsData.PhysicsMemoryMap physics = PhysicsData.GetPhysics();
+			GraphicsData.GraphicsMemoryMap graphics = GraphicsData.GetGraphics();
+			dataGas[index] = physics.gas;
+			dataBrake[index] = physics.brake;
+			dataGear[index] = physics.gear - 1;
+			dataSteer[index] = physics.steerAngle;
+			dataLap[index] = graphics.completedLaps;
+
+			if (index > 0) { 
+				if(dataLap[index] > dataLap[index - 1])
+				{
+					plotFrameGas.plt.PlotVLine(index, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
+					plotFrameBrake.plt.PlotVLine(index, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
+					plotFrameGear.plt.PlotVLine(index, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
+					plotFrameSteer.plt.PlotVLine(index, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
+				}
+			}
 
 			index++;
 			Thread.Sleep(sleepTime);

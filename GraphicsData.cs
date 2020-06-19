@@ -18,21 +18,21 @@ namespace AssettoCorsaTelemetryApp
 
 		//These will almost certainly need updating on your project. Sorry :/
 #if RELEASE
-		[DllImport(@"C:\Users\benny\source\repos\AssettoCorsaTelemetryApp\x64\Release\Backend.dll", EntryPoint = "initialize_graphics")]
+		[DllImport(@"C:\Windows\SysWOW64\ACWPFTelemetry\Backend.dll", EntryPoint = "initialize_graphics")]
 #else
 		[DllImport(@"C:\Users\benny\source\repos\AssettoCorsaTelemetryApp\x64\Debug\Backend.dll", EntryPoint = "initialize_graphics")]
 #endif
 		private static extern void InitializeGraphics();
 
 #if RELEASE
-		[DllImport(@"C:\Users\benny\source\repos\AssettoCorsaTelemetryApp\x64\Release\Backend.dll", EntryPoint = "free_graphics")]
+		[DllImport(@"C:\Windows\SysWOW64\ACWPFTelemetry\Backend.dll", EntryPoint = "free_graphics")]
 #else
 		[DllImport(@"C:\Users\benny\source\repos\AssettoCorsaTelemetryApp\x64\Debug\Backend.dll", EntryPoint = "free_graphics")]
 #endif
 		private static extern void FreeGraphics();
 
 #if RELEASE
-		[DllImport(@"C:\Users\benny\source\repos\AssettoCorsaTelemetryApp\x64\Release\Backend.dll", EntryPoint = "get_graphics")]
+		[DllImport(@"C:\Windows\SysWOW64\ACWPFTelemetry\Backend.dll", EntryPoint = "get_graphics")]
 #else
 		[DllImport(@"C:\Users\benny\source\repos\AssettoCorsaTelemetryApp\x64\Debug\Backend.dll", EntryPoint = "get_graphics")]
 #endif

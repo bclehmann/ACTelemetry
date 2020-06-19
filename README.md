@@ -19,3 +19,5 @@ Note, I'm not actually this bad, I needed to spin on purpose to demonstrate the 
 # Installation
 
 Check the releases page for downloads.
+
+If you use the stock launcher, start Assetto Corsa *before* you start the app. If you use Content Manager it doesn't matter.

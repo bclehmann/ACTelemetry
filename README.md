@@ -14,7 +14,7 @@ This app can show the slip of each tyre individually:
 
 ![Tyre Slip](https://raw.githubusercontent.com/Benny121221/AssettoCorsaTelemetryApp/master/images/Annotation%202020-06-18%20202709.png)
 
-Note, I'm not actually this bad, I needed to spin on purpose (insert Sebastian Vettel joke here).
+Note, I'm not actually this bad, I needed to spin on purpose to demonstrate the idea (insert Sebastian Vettel joke here).
 
 # Installation
 

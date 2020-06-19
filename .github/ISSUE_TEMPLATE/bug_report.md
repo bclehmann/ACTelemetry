@@ -15,21 +15,22 @@ A clear and concise description of what the bug is.
 **To Reproduce**
 Steps to reproduce the behavior:
 
-Go to '...'
-Click on '....'
-Scroll down to '....'
-See error
-Expected behavior
+- Go to '...'
+- Click on '....'
+- Scroll down to '....'
+- See error
+
+**Expected behavior**
 A clear and concise description of what you expected to happen.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
 **System Information:**
-OS: [e.g. Windows 10]
-Release [e.g. 1.1.2]
-OS Architecture [e.g. 64 Bit]
-.NET Core Runtime version [e.g. 3.1]
+- OS: [e.g. Windows 10]
+- Release [e.g. 1.1.2]
+- OS Architecture [e.g. 64 Bit]
+- .NET Core Runtime version [e.g. 3.1]
 
 If you don't know the answer to one of these questions I will be able to walk you through finding the answer.
 

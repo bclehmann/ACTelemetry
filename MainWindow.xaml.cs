@@ -79,6 +79,7 @@ namespace AssettoCorsaTelemetryApp
 		{
 			InitializeComponent();
 
+			unsafe { Debug.WriteLine(sizeof(ImportantData)); }
 			plots = new TracePlot[8];
 			plots[0] = new TracePlot()
 			{

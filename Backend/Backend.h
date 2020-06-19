@@ -44,7 +44,7 @@ struct PhysicsMemoryMap
 	float kersCharge = 0;
 	float kersInput = 0;
 	int autoShifterOn = 0;
-	float righeHeight[2];
+	float rideHeight[2];
 	float turboBoost = 0;
 	float ballast = 0;
 	float airDensity = 0;

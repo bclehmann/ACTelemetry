@@ -86,11 +86,11 @@ namespace AssettoCorsaTelemetryApp
 	{
 		public int packetId;
 		public AC_STATUS status;
-		AC_SESSION_TYPE session;
-		fixed char currentTIme[15];
-		fixed char lastTime[15];
-		fixed char bestTime[15];
-		fixed char split[15];
+		public AC_SESSION_TYPE session;
+		public fixed char currentTIme[15];
+		public fixed char lastTime[15];
+		public fixed char bestTime[15];
+		public fixed char split[15];
 		public int completedLaps;
 		public int position;
 		public int iCurrentTime;
@@ -102,12 +102,12 @@ namespace AssettoCorsaTelemetryApp
 		public int currentSectorIndex;
 		public int lastSectorTime;
 		public int numberOfLaps;
-		fixed char tyreCompound[33];
+		public fixed char tyreCompound[33];
 		public float replayTimeMultiplier;
 		public float normalizedCarPosition;
 		public fixed float carCoordinates[3];
 		public float penaltyTime;
-		AC_FLAG_TYPE flag;
+		public AC_FLAG_TYPE flag;
 		public int idealLineOn;
 		public int isInPitLane;
 		public float surfaceGrip;

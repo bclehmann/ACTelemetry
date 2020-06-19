@@ -85,7 +85,7 @@ namespace AssettoCorsaTelemetryApp
 		public float kersCharge;
 		public float kersInput;
 		public int autoShifterOn;
-		public fixed float righeHeight[2];
+		public fixed float rideHeight[2];
 		public float turboBoost;
 		public float ballast;
 		public float airDensity;
@@ -114,5 +114,4 @@ namespace AssettoCorsaTelemetryApp
 		public float brakeBias;
 		public fixed float localVelocity[3];
 	}
-
 }

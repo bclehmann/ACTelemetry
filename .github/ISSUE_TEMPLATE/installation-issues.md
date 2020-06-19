@@ -16,10 +16,10 @@ Note, this is for installation issues, bugs should use the "Bug Report" template
 If applicable, add screenshots to help explain your problem.
 
 **System Information:**
-OS: [e.g. Windows 10]
-Release [e.g. 1.1.2]
-OS Architecute [e.g. 64 Bit]
-.NET Core Runtime version [e.g. 3.1]
+- OS: [e.g. Windows 10]
+- Release [e.g. 1.1.2]
+- OS Architecture [e.g. 64 Bit]
+- .NET Core Runtime version [e.g. 3.1]
 
 If you don't know the answer to one of these questions I will be able to walk you through finding the answer.
 

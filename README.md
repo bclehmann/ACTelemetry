@@ -8,6 +8,14 @@ The performance impact is minimal, I have a pretty poor machine and I don't lose
 
 In theory this should work in Assetto Corsa Competizione, however I don't own the game so I haven't tried.
 
+# Diagnose your mistakes easily
+
+This app can show the slip of each tyre individually:
+
+![Tyre Slip](https://raw.githubusercontent.com/Benny121221/AssettoCorsaTelemetryApp/master/images/Annotation%202020-06-18%20202709.png)
+
+Note, I'm not actually this bad, I needed to spin on purpose (insert Sebastian Vettel joke here).
+
 # Installation
 
 Check the releases page for downloads.

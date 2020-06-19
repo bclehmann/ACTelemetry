@@ -9,10 +9,10 @@ assignees: ''
 
 Note, this is for bugs, any installation issues should use the "Installation Issues" template
 
-Describe the bug
+**Describe the bug**
 A clear and concise description of what the bug is.
 
-To Reproduce
+**To Reproduce**
 Steps to reproduce the behavior:
 
 Go to '...'
@@ -22,15 +22,16 @@ See error
 Expected behavior
 A clear and concise description of what you expected to happen.
 
-Screenshots
+**Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-System Information:
-
+**System Information:**
 OS: [e.g. Windows 10]
 Release [e.g. 1.1.2]
-OS Architecute [e.g. 64 Bit]
+OS Architecture [e.g. 64 Bit]
 .NET Core Runtime version [e.g. 3.1]
 
-Additional context
+If you don't know the answer to one of these questions I will be able to walk you through finding the answer.
+
+**Additional context**
 Add any other context about the problem here.

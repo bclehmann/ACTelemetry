@@ -157,7 +157,7 @@ namespace AssettoCorsaTelemetryApp
 			gearYTicks[1] = "N";
 			plotFrameGear.plt.YTicks(Enumerable.Range(-1, 12).Select(i => (double)i).ToArray(), gearYTicks);
 
-			plotFrameSlip.plt.Legend();
+			plotFrameSlip.plt.Legend(location : legendLocation.upperRight);
 
 			physData = new PhysicsData();
 			graphicsData = new GraphicsData();

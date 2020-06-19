@@ -117,28 +117,28 @@ namespace AssettoCorsaTelemetryApp
 				plotFrame = plotFrameSlip,
 				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.FL, label: "FL", color: System.Drawing.Color.Cyan, markerSize: 0),
 				name = "Tyre Slip",
-				yLims = new double[] { -0.2, 10 }
+				yLims = new double[] { -0.2, 5 }
 			};
 			plots[5] = new TracePlot()
 			{
 				plotFrame = plotFrameSlip,
 				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.FR, label: "FR", color: System.Drawing.Color.DarkCyan, markerSize: 0),
 				name = "Tyre Slip",
-				yLims = new double[] { -0.2, 10 }
+				yLims = new double[] { -0.2, 5 }
 			};
 			plots[6] = new TracePlot()
 			{
 				plotFrame = plotFrameSlip,
-				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RL, label: "RL", color: System.Drawing.Color.Orange, markerSize: 0),
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RL, label: "RL", color: System.Drawing.Color.HotPink, markerSize: 0),
 				name = "Tyre Slip",
-				yLims = new double[] { -0.2, 10 }
+				yLims = new double[] { -0.2, 5 }
 			};
 			plots[7] = new TracePlot()
 			{
 				plotFrame = plotFrameSlip,
-				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RR, label: "RR", color: System.Drawing.Color.DarkOrange, markerSize: 0),
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RR, label: "RR", color: System.Drawing.Color.DeepPink, markerSize: 0),
 				name = "Tyre Slip",
-				yLims = new double[] { -0.2, 10 }
+				yLims = new double[] { -0.2, 5 }
 			};
 
 			foreach (TracePlot curr in plots)

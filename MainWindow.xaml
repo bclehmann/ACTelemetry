@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Telemetry"
 		WindowState="Maximized"
+		Closing="Window_Close"
 		>
 	<Grid>
 		<Grid.RowDefinitions>

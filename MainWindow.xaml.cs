@@ -166,6 +166,12 @@ namespace AssettoCorsaTelemetryApp
 
 		private void StartLogging_Click(object sender, RoutedEventArgs e)
 		{
+			if (started)
+			{
+				renderTimer.Stop();
+				updateTimer.Stop();
+			}
+
 			started = true;
 			index = 0;
 			for (int i = 0; i < bufferSize; i++)

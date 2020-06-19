@@ -9,17 +9,19 @@ assignees: ''
 
 Note, this is for installation issues, bugs should use the "Bug Report" template
 
-Describe the behaviour [e.g. App does not open]
+**Describe the behaviour**
+[e.g. App does not open]
 
-Screenshots
+**Screenshots**
 If applicable, add screenshots to help explain your problem.
 
-System Information:
-
+**System Information:**
 OS: [e.g. Windows 10]
 Release [e.g. 1.1.2]
 OS Architecute [e.g. 64 Bit]
 .NET Core Runtime version [e.g. 3.1]
 
-Additional context
+If you don't know the answer to one of these questions I will be able to walk you through finding the answer.
+
+**Additional context**
 Add any other context about the problem here.

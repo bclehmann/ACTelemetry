@@ -16,6 +16,7 @@
 			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -34,5 +35,6 @@
 		<WpfPlot Name="plotFrameBrake" Grid.Row="2" Grid.Column="0"/>
 		<WpfPlot Name="plotFrameGear" Grid.Row="3" Grid.Column="0"/>
 		<WpfPlot Name="plotFrameSteer" Grid.Row="4" Grid.Column="0"/>
+		<WpfPlot Name="plotFrameSlip" Grid.Row="5" Grid.Column="0"/>
 	</Grid>
 </Window>

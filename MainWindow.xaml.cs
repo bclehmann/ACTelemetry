@@ -29,6 +29,12 @@ namespace AssettoCorsaTelemetryApp
 		public string name;
 		public double[] yLims;
 	}
+
+	public struct WheelDoubles
+	{
+		public double[] FL, FR, RL, RR;
+	}
+
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
@@ -46,6 +52,15 @@ namespace AssettoCorsaTelemetryApp
 		double[] dataGearLast = new double[bufferSize / 50];
 		double[] dataSteer = new double[bufferSize];
 		double[] dataSteerLast = new double[bufferSize / 50];
+
+		WheelDoubles dataSlip = new WheelDoubles()
+		{
+			FL = new double[bufferSize],
+			FR = new double[bufferSize],
+			RL = new double[bufferSize],
+			RR = new double[bufferSize]
+		};
+
 		int index = 0;
 		int[] dataLap = new int[bufferSize];
 		List<int> beginLapIndices = new List<int>();
@@ -64,7 +79,7 @@ namespace AssettoCorsaTelemetryApp
 		{
 			InitializeComponent();
 
-			plots = new TracePlot[4];
+			plots = new TracePlot[8];
 			plots[0] = new TracePlot()
 			{
 				plotFrame = plotFrameGas,
@@ -97,19 +112,52 @@ namespace AssettoCorsaTelemetryApp
 				name = "Steering Angle",
 				yLims = new double[] { -1.2, 1.2 }
 			};
+			plots[4] = new TracePlot()
+			{
+				plotFrame = plotFrameSlip,
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.FL, label: "FL", color: System.Drawing.Color.Cyan, markerSize: 0),
+				name = "Tyre Slip",
+				yLims = new double[] { -0.2, 10 }
+			};
+			plots[5] = new TracePlot()
+			{
+				plotFrame = plotFrameSlip,
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.FR, label: "FR", color: System.Drawing.Color.DarkCyan, markerSize: 0),
+				name = "Tyre Slip",
+				yLims = new double[] { -0.2, 10 }
+			};
+			plots[6] = new TracePlot()
+			{
+				plotFrame = plotFrameSlip,
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RL, label: "RL", color: System.Drawing.Color.Orange, markerSize: 0),
+				name = "Tyre Slip",
+				yLims = new double[] { -0.2, 10 }
+			};
+			plots[7] = new TracePlot()
+			{
+				plotFrame = plotFrameSlip,
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RR, label: "RR", color: System.Drawing.Color.DarkOrange, markerSize: 0),
+				name = "Tyre Slip",
+				yLims = new double[] { -0.2, 10 }
+			};
 
 			foreach (TracePlot curr in plots)
 			{
 				curr.plotFrame.plt.Title(curr.name);
 				curr.plotFrame.plt.Ticks(displayTickLabelsX: false);
 				curr.plotFrame.plt.Axis(0, 0, curr.yLims[0], curr.yLims[1]);
-				curr.sigplotLastLap.visible = false;
+				if (curr.sigplotLastLap != null)
+				{
+					curr.sigplotLastLap.visible = false;
+				}
 			}
 
 			string[] gearYTicks = Enumerable.Range(-1, 12).Select(i => "" + i).ToArray();
 			gearYTicks[0] = "R";
 			gearYTicks[1] = "N";
 			plotFrameGear.plt.YTicks(Enumerable.Range(-1, 12).Select(i => (double)i).ToArray(), gearYTicks);
+
+			plotFrameSlip.plt.Legend();
 
 			physData = new PhysicsData();
 			graphicsData = new GraphicsData();
@@ -129,9 +177,12 @@ namespace AssettoCorsaTelemetryApp
 				dataLap[i] = 0;
 			}
 
-			foreach(var curr in plots)
+			foreach (var curr in plots)
 			{
-				curr.sigplotLastLap.visible = false;
+				if (curr.sigplotLastLap != null)
+				{
+					curr.sigplotLastLap.visible = false;
+				}
 			}
 
 			lastCompletedLap = 0;
@@ -160,7 +211,7 @@ namespace AssettoCorsaTelemetryApp
 			{
 				curr.sigplot.maxRenderIndex = index;
 
-				if (incrementedLap)
+				if (incrementedLap && curr.sigplotLastLap != null)
 				{
 					int count = beginLapIndices.Count();
 					int skip = 0;
@@ -189,7 +240,7 @@ namespace AssettoCorsaTelemetryApp
 			}
 		}
 
-		private void Update(object sender, EventArgs e)
+		private unsafe void Update(object sender, EventArgs e)
 		{
 			if (index >= bufferSize)
 			{
@@ -203,6 +254,10 @@ namespace AssettoCorsaTelemetryApp
 			dataGear[index] = physics.gear - 1; // 0 is reverse, 1 is neutral, 2 is first, etc. I think that's stupid
 			dataSteer[index] = physics.steerAngle;
 			dataLap[index] = graphics.completedLaps;
+			dataSlip.FL[index] = physics.wheelSlip[0];
+			dataSlip.FR[index] = physics.wheelSlip[1];
+			dataSlip.RL[index] = physics.wheelSlip[2];
+			dataSlip.RR[index] = physics.wheelSlip[3];
 
 			if (index > 0)
 			{

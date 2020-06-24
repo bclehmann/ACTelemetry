@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -157,7 +158,7 @@ namespace AssettoCorsaTelemetryApp
 			gearYTicks[1] = "N";
 			plotFrameGear.plt.YTicks(Enumerable.Range(-1, 12).Select(i => (double)i).ToArray(), gearYTicks);
 
-			plotFrameSlip.plt.Legend(location : legendLocation.upperRight);
+			plotFrameSlip.plt.Legend(location: legendLocation.upperRight);
 
 			physData = new PhysicsData();
 			graphicsData = new GraphicsData();
@@ -288,6 +289,30 @@ namespace AssettoCorsaTelemetryApp
 				proc.StartInfo.FileName = "https://github.com/Benny121221/AssettoCorsaTelemetryApp";
 				proc.StartInfo.UseShellExecute = true;
 				proc.Start();
+			}
+		}
+
+		private void CSVExport_Click(object sender, RoutedEventArgs e)
+		{
+			Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+			dlg.FileName = $"{DateTime.UtcNow.ToString(@"yyyy-MM-dd HH\hmm\mss")}Z ACTelemetry";
+			dlg.DefaultExt = ".csv";
+
+			bool? result = dlg.ShowDialog();
+
+			if (result == true)
+			{ //Nullable
+				StringBuilder output = new StringBuilder();
+				output.Append("gas,brake,gear,steer,slip_fl,slip_fr,slip_rl,slip_rr\n");
+				for (int i = 0; i < index; i++)
+				{
+					output.Append($"{dataGas[i]},{dataBrake[i]},{dataGear[i]},{dataSteer[i]},{dataSlip.FL[i]},{dataSlip.FR[i]},{dataSlip.RL[i]},{dataSlip.RR[i]}\n");
+				}
+
+				using (StreamWriter writer = new StreamWriter(dlg.FileName))
+				{
+					writer.Write(output);
+				}
 			}
 		}
 

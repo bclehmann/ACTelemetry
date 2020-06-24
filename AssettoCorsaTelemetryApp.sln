@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssettoCorsaTelemetryApp", "AssettoCorsaTelemetryApp.csproj", "{866468FE-9AFE-4F3E-8A16-9E145A5F2A89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssettoCorsaTelemetryApp", "AssettoCorsaTelemetryApp.csproj", "{866468FE-9AFE-4F3E-8A16-9E145A5F2A89}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Backend", "Backend\Backend.vcxproj", "{725F86F4-7347-45DD-AAA0-718CE855393F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstallScript", "InstallScript\InstallScript.csproj", "{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,18 @@ Global
 		{725F86F4-7347-45DD-AAA0-718CE855393F}.Release|x64.Build.0 = Release|x64
 		{725F86F4-7347-45DD-AAA0-718CE855393F}.Release|x86.ActiveCfg = Release|Win32
 		{725F86F4-7347-45DD-AAA0-718CE855393F}.Release|x86.Build.0 = Release|Win32
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Debug|x64.Build.0 = Debug|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Debug|x86.Build.0 = Debug|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Release|x64.ActiveCfg = Release|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Release|x64.Build.0 = Release|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Release|x86.ActiveCfg = Release|Any CPU
+		{13BDD2E5-0C52-4E36-8422-701FFFDBBD83}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

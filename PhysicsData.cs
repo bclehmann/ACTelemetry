@@ -8,13 +8,13 @@ namespace AssettoCorsaTelemetryApp
 {
 	public class PhysicsData : IMemoryMappedFile<PhysicsMemoryMap>
 	{
-		static PhysicsData()
+		public PhysicsData()
 		{
 			InitializePhysics();
 			physicsptr = GetPhysicsPointer();
 		}
 
-		private static IntPtr physicsptr = IntPtr.Zero;
+		private IntPtr physicsptr = IntPtr.Zero;
 
 		//These will almost certainly need updating on your project. Sorry :/
 #if RELEASE

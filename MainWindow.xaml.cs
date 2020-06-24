@@ -163,13 +163,15 @@ namespace AssettoCorsaTelemetryApp
 			
 			plotFrameSteer.plt.PlotHLine(0, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
 
-			physData = new PhysicsData();
-			graphicsData = new GraphicsData();
+			
 			SamplingRate_TextBlock.Text = $"Logging Frequency: {1 / (sleepTime / 1000f):f3} Hz";
 		}
 
 		private void StartLogging_Click(object sender, RoutedEventArgs e)
 		{
+			physData = new PhysicsData();
+			graphicsData = new GraphicsData();
+
 			if (started)
 			{
 				renderTimer.Stop();
@@ -244,6 +246,9 @@ namespace AssettoCorsaTelemetryApp
 		{
 			if (started)
 			{
+				physData.Dispose();
+				graphicsData.Dispose();
+
 				updateTimer.Stop();
 				renderTimer.Stop();
 				started = false;
@@ -327,7 +332,8 @@ namespace AssettoCorsaTelemetryApp
 
 		private void Window_Close(object sender, CancelEventArgs e)
 		{
-			Dispose();
+			if(started)
+				Dispose();
 		}
 	}
 }

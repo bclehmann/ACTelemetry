@@ -76,6 +76,7 @@ namespace AssettoCorsaTelemetryApp
 
 		bool started = false;
 
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -159,6 +160,8 @@ namespace AssettoCorsaTelemetryApp
 			plotFrameGear.plt.YTicks(Enumerable.Range(-1, 12).Select(i => (double)i).ToArray(), gearYTicks);
 
 			plotFrameSlip.plt.Legend(location: legendLocation.upperRight);
+			
+			plotFrameSteer.plt.PlotHLine(0, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
 
 			physData = new PhysicsData();
 			graphicsData = new GraphicsData();

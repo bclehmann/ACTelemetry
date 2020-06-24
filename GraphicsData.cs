@@ -8,13 +8,13 @@ namespace AssettoCorsaTelemetryApp
 {
 	public class GraphicsData : IMemoryMappedFile<GraphicsMemoryMap>
 	{
-		static GraphicsData()
+		public GraphicsData()
 		{
 			InitializeGraphics();
 			graphicsPtr = GetGraphicsPointer();
 		}
 
-		private static IntPtr graphicsPtr = IntPtr.Zero;
+		private IntPtr graphicsPtr = IntPtr.Zero;
 
 		//These will almost certainly need updating on your project. Sorry :/
 #if RELEASE

@@ -45,6 +45,12 @@ namespace AssettoCorsaTelemetryApp
 		const int renderSleepTime = 500;
 		const int plotSpanTime = 30_000;
 		const int bufferSize = 500_000;
+
+		System.Drawing.Color fl_colour = System.Drawing.Color.Cyan;
+		System.Drawing.Color fr_colour = System.Drawing.Color.DarkCyan;
+		System.Drawing.Color rl_colour = System.Drawing.Color.HotPink;
+		System.Drawing.Color rr_colour = System.Drawing.Color.DeepPink;
+
 		double[] dataGas = new double[bufferSize];
 		double[] dataGasLast = new double[bufferSize / 50];
 		double[] dataBrake = new double[bufferSize];
@@ -80,6 +86,7 @@ namespace AssettoCorsaTelemetryApp
 		public MainWindow()
 		{
 			InitializeComponent();
+			UpdateVisibility();
 
 			plots = new TracePlot[8];
 			plots[0] = new TracePlot()
@@ -88,7 +95,7 @@ namespace AssettoCorsaTelemetryApp
 				sigplot = plotFrameGas.plt.PlotSignal(dataGas, color: System.Drawing.Color.FromArgb(255, 25, 150, 0), markerSize: 0),
 				sigplotLastLap = plotFrameGas.plt.PlotSignal(dataGasLast, color: System.Drawing.Color.FromArgb(100, 25, 150, 0), markerSize: 0),
 				name = "Gas",
-				yLims = new double[] { -0.2, 1.2 }
+				yLims = new double[] { -0.2, 1.2 },
 			};
 			plots[1] = new TracePlot()
 			{
@@ -96,7 +103,7 @@ namespace AssettoCorsaTelemetryApp
 				sigplot = plotFrameBrake.plt.PlotSignal(dataBrake, color: System.Drawing.Color.FromArgb(255, 200, 0, 0), markerSize: 0),
 				sigplotLastLap = plotFrameBrake.plt.PlotSignal(dataBrakeLast, color: System.Drawing.Color.FromArgb(100, 200, 0, 0), markerSize: 0),
 				name = "Brake",
-				yLims = new double[] { -0.2, 1.2 }
+				yLims = new double[] { -0.2, 1.2 },
 			};
 			plots[2] = new TracePlot()
 			{
@@ -104,7 +111,7 @@ namespace AssettoCorsaTelemetryApp
 				sigplot = plotFrameGear.plt.PlotSignal(dataGear, color: System.Drawing.Color.Black, markerSize: 0),
 				sigplotLastLap = plotFrameGear.plt.PlotSignal(dataGearLast, color: System.Drawing.Color.FromArgb(100, 0, 0, 0), markerSize: 0),
 				name = "Gear",
-				yLims = new double[] { -1.2, 10.2 } //This'll be fun if someone has a car with 17 gears
+				yLims = new double[] { -1.2, 10.2 }, //This'll be fun if someone has a car with 17 gears
 			};
 			plots[3] = new TracePlot()
 			{
@@ -112,35 +119,35 @@ namespace AssettoCorsaTelemetryApp
 				sigplot = plotFrameSteer.plt.PlotSignal(dataSteer, color: System.Drawing.Color.FromArgb(255, 100, 0, 200), markerSize: 0),
 				sigplotLastLap = plotFrameSteer.plt.PlotSignal(dataSteerLast, color: System.Drawing.Color.FromArgb(100, 100, 0, 200), markerSize: 0),
 				name = "Steering Angle",
-				yLims = new double[] { -1.2, 1.2 }
+				yLims = new double[] { -1.2, 1.2 },
 			};
 			plots[4] = new TracePlot()
 			{
 				plotFrame = plotFrameSlip,
-				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.FL, label: "FL", color: System.Drawing.Color.Cyan, markerSize: 0),
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.FL, label: "FL", color: fl_colour, markerSize: 0),
 				name = "Tyre Slip",
-				yLims = new double[] { -0.2, 5 }
+				yLims = new double[] { -0.2, 5 },
 			};
 			plots[5] = new TracePlot()
 			{
 				plotFrame = plotFrameSlip,
-				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.FR, label: "FR", color: System.Drawing.Color.DarkCyan, markerSize: 0),
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.FR, label: "FR", color: fr_colour, markerSize: 0),
 				name = "Tyre Slip",
-				yLims = new double[] { -0.2, 5 }
+				yLims = new double[] { -0.2, 5 },
 			};
 			plots[6] = new TracePlot()
 			{
 				plotFrame = plotFrameSlip,
-				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RL, label: "RL", color: System.Drawing.Color.HotPink, markerSize: 0),
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RL, label: "RL", color: rl_colour, markerSize: 0),
 				name = "Tyre Slip",
-				yLims = new double[] { -0.2, 5 }
+				yLims = new double[] { -0.2, 5 },
 			};
 			plots[7] = new TracePlot()
 			{
 				plotFrame = plotFrameSlip,
-				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RR, label: "RR", color: System.Drawing.Color.DeepPink, markerSize: 0),
+				sigplot = plotFrameSlip.plt.PlotSignal(dataSlip.RR, label: "RR", color: rr_colour, markerSize: 0),
 				name = "Tyre Slip",
-				yLims = new double[] { -0.2, 5 }
+				yLims = new double[] { -0.2, 5 },
 			};
 
 			foreach (TracePlot curr in plots)
@@ -160,10 +167,10 @@ namespace AssettoCorsaTelemetryApp
 			plotFrameGear.plt.YTicks(Enumerable.Range(-1, 12).Select(i => (double)i).ToArray(), gearYTicks);
 
 			plotFrameSlip.plt.Legend(location: legendLocation.upperRight);
-			
+
 			plotFrameSteer.plt.PlotHLine(0, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
 
-			
+
 			SamplingRate_TextBlock.Text = $"Logging Frequency: {1 / (sleepTime / 1000f):f3} Hz";
 		}
 
@@ -332,8 +339,21 @@ namespace AssettoCorsaTelemetryApp
 
 		private void Window_Close(object sender, CancelEventArgs e)
 		{
-			if(started)
+			if (started)
 				Dispose();
+		}
+
+		private void UpdateVisibility()
+		{
+			Resources["basicsVisibility"] = basics.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
+			Resources["slipVisibility"] = slip.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
+			Resources["temperatureVisibility"] = temperatures.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
+			Resources["suspensionVisibility"] = suspension.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		private void checkbox_Click(object sender, RoutedEventArgs e)
+		{
+			UpdateVisibility();
 		}
 	}
 }

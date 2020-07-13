@@ -1,16 +1,32 @@
 ﻿<Window x:Class="AssettoCorsaTelemetryApp.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AssettoCorsaTelemetryApp"
-        mc:Ignorable="d"
-        Title="Telemetry"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:AssettoCorsaTelemetryApp"
+		mc:Ignorable="d"
+		Title="Telemetry"
 		WindowState="Maximized"
 		Closing="Window_Close"
 		>
+
+	<Window.Resources>
+		<Visibility x:Key="basicsVisibility">
+			Visible
+		</Visibility>
+		<Visibility x:Key="slipVisibility">
+			Visible
+		</Visibility>
+		<Visibility x:Key="temperatureVisibility">
+			Visible
+		</Visibility>
+		<Visibility x:Key="suspensionVisibility">
+			Visible
+		</Visibility>
+	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"></RowDefinition>
 			<RowDefinition Height="auto"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
@@ -32,10 +48,17 @@
 			<Button Click="CSVExport_Click" Margin="2,0,5,0" DockPanel.Dock="Right">Export to CSV</Button>
 		</DockPanel>
 
-		<WpfPlot Name="plotFrameGas" Grid.Row="1" Grid.Column="0"/>
-		<WpfPlot Name="plotFrameBrake" Grid.Row="2" Grid.Column="0"/>
-		<WpfPlot Name="plotFrameGear" Grid.Row="3" Grid.Column="0"/>
-		<WpfPlot Name="plotFrameSteer" Grid.Row="4" Grid.Column="0"/>
-		<WpfPlot Name="plotFrameSlip" Grid.Row="5" Grid.Column="0"/>
+		<StackPanel Grid.Row="1" Grid.Column="0" Margin="40, 10, 8, 10">
+			<CheckBox Name="basics" IsChecked="True" Click="checkbox_Click">Basic Traces</CheckBox>
+			<CheckBox Name="slip" Click="checkbox_Click">Wheel Slip</CheckBox>
+			<CheckBox Name="temperatures" Click="checkbox_Click">Temperatures</CheckBox>
+			<CheckBox Name="suspension" Click="checkbox_Click">Suspension</CheckBox>
+		</StackPanel>
+
+		<WpfPlot Name="plotFrameGas" Grid.Row="2" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
+		<WpfPlot Name="plotFrameBrake" Grid.Row="3" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
+		<WpfPlot Name="plotFrameGear" Grid.Row="4" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
+		<WpfPlot Name="plotFrameSteer" Grid.Row="5" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
+		<WpfPlot Name="plotFrameSlip" Grid.Row="6" Grid.Column="0" Visibility="{DynamicResource slipVisibility}"/>
 	</Grid>
 </Window>

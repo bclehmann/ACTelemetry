@@ -36,6 +36,7 @@
 			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
 			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
 			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
 			<RowDefinition Height="{DynamicResource slipHeight}"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
@@ -63,6 +64,7 @@
 		<WpfPlot Name="plotFrameBrake" Grid.Row="3" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
 		<WpfPlot Name="plotFrameGear" Grid.Row="4" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
 		<WpfPlot Name="plotFrameSteer" Grid.Row="5" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
-		<WpfPlot Name="plotFrameSlip" Grid.Row="6" Grid.Column="0" Visibility="{DynamicResource slipVisibility}"/>
+		<WpfPlot Name="plotFrameRPM" Grid.Row="6" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
+		<WpfPlot Name="plotFrameSlip" Grid.Row="7" Grid.Column="0" Visibility="{DynamicResource slipVisibility}"/>
 	</Grid>
 </Window>

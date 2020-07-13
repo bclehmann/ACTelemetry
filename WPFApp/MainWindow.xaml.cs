@@ -59,7 +59,7 @@ namespace AssettoCorsaTelemetryApp
 		double[] dataGearLast = new double[bufferSize / 50];
 		double[] dataSteer = new double[bufferSize];
 		double[] dataSteerLast = new double[bufferSize / 50];
-		int[] dataRPM = new int[bufferSize];
+		double[] dataRPM = new double[bufferSize];
 
 		WheelDoubles dataSlip = new WheelDoubles()
 		{
@@ -80,6 +80,11 @@ namespace AssettoCorsaTelemetryApp
 
 		PhysicsData physData;
 		GraphicsData graphicsData;
+		StaticsData staticsData;
+
+		StaticsMemoryMap staticsMemoryMap;
+
+		List<ScottPlot.Plottable> sessionLimited = new List<Plottable>();
 
 		bool started = false;
 
@@ -89,7 +94,7 @@ namespace AssettoCorsaTelemetryApp
 			InitializeComponent();
 			UpdateVisibility();
 
-			plots = new TracePlot[8];
+			plots = new TracePlot[9];
 			plots[0] = new TracePlot()
 			{
 				plotFrame = plotFrameGas,
@@ -150,6 +155,13 @@ namespace AssettoCorsaTelemetryApp
 				name = "Tyre Slip",
 				yLims = new double[] { -0.2, 5 },
 			};
+			plots[8] = new TracePlot()
+			{
+				plotFrame = plotFrameRPM,
+				sigplot = plotFrameRPM.plt.PlotSignal(dataRPM, color: System.Drawing.Color.Gold, markerSize: 0),
+				name = "RPM",
+				yLims = new double[] { -0.2, 30_000},
+			};
 
 			foreach (TracePlot curr in plots)
 			{
@@ -179,6 +191,21 @@ namespace AssettoCorsaTelemetryApp
 		{
 			physData = new PhysicsData();
 			graphicsData = new GraphicsData();
+			staticsData = new StaticsData();
+			staticsMemoryMap = staticsData.GetData();
+
+			foreach(var curr in plots)
+			{
+				curr.plotFrame.plt.Clear(p => sessionLimited.Contains(p));
+
+				if (curr.plotFrame == plotFrameRPM)
+				{
+					curr.yLims[1] = staticsMemoryMap.maxRpm + 2000;
+				}
+			}
+
+			sessionLimited.Clear();
+			sessionLimited.Add(plotFrameRPM.plt.PlotHLine((double)staticsMemoryMap.maxRpm, System.Drawing.Color.Red, lineStyle: LineStyle.Dot));
 
 			if (started)
 			{
@@ -195,6 +222,11 @@ namespace AssettoCorsaTelemetryApp
 				dataGear[i] = 0;
 				dataSteer[i] = 0;
 				dataLap[i] = 0;
+				dataSlip.FL[i] = 0;
+				dataSlip.FR[i] = 0;
+				dataSlip.RL[i] = 0;
+				dataSlip.RR[i] = 0;
+				dataRPM[i] = 0;
 			}
 
 			foreach (var curr in plots)
@@ -281,6 +313,7 @@ namespace AssettoCorsaTelemetryApp
 			dataSlip.FR[index] = physics.wheelSlip[1];
 			dataSlip.RL[index] = physics.wheelSlip[2];
 			dataSlip.RR[index] = physics.wheelSlip[3];
+			dataRPM[index] = physics.rpms;
 
 			if (index > 0)
 			{
@@ -289,7 +322,7 @@ namespace AssettoCorsaTelemetryApp
 					beginLapIndices.Add(index);
 					foreach (TracePlot curr in plots)
 					{
-						curr.plotFrame.plt.PlotVLine(index, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
+						sessionLimited.Add(curr.plotFrame.plt.PlotVLine(index, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash));
 					}
 				}
 			}

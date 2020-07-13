@@ -19,7 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="Backend\Backend.vcxproj" />
+		<ProjectReference Include="..\Backend\Backend.vcxproj" />
 	</ItemGroup>
 
 </Project>

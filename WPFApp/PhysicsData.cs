@@ -102,6 +102,7 @@ namespace AssettoCorsaTelemetryApp
 		public float kersCurrentKJ;
 		public int drsAvailable;
 		public int drsEnabled;
+		public fixed byte padding_do_not_use[4];
 		public fixed float brakeTemp[4];
 		public float clutch;
 		public fixed float tyreTempI[4];

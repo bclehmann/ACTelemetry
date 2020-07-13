@@ -3,7 +3,7 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:AssettoCorsaTelemetryApp"
+		xmlns:local="clr-namespace:AssettoCorsaTelemetryApp" xmlns:sys="clr-namespace:System;assembly=System.Runtime"
 		mc:Ignorable="d"
 		Title="Telemetry"
 		WindowState="Maximized"
@@ -23,16 +23,20 @@
 		<Visibility x:Key="suspensionVisibility">
 			Visible
 		</Visibility>
+		<GridLength x:Key="basicsHeight">
+		</GridLength>
+		<GridLength x:Key="slipHeight">
+		</GridLength>
 	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="auto"></RowDefinition>
 			<RowDefinition Height="auto"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
-			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource slipHeight}"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>

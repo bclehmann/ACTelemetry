@@ -59,6 +59,7 @@ namespace AssettoCorsaTelemetryApp
 		double[] dataGearLast = new double[bufferSize / 50];
 		double[] dataSteer = new double[bufferSize];
 		double[] dataSteerLast = new double[bufferSize / 50];
+		int[] dataRPM = new int[bufferSize];
 
 		WheelDoubles dataSlip = new WheelDoubles()
 		{
@@ -349,6 +350,9 @@ namespace AssettoCorsaTelemetryApp
 			Resources["slipVisibility"] = slip.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
 			Resources["temperatureVisibility"] = temperatures.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
 			Resources["suspensionVisibility"] = suspension.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
+
+			Resources["basicsHeight"] = basics.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+			Resources["slipHeight"] = slip.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
 		}
 
 		private void checkbox_Click(object sender, RoutedEventArgs e)

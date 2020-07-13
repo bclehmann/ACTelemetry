@@ -27,6 +27,10 @@
 		</GridLength>
 		<GridLength x:Key="slipHeight">
 		</GridLength>
+		<GridLength x:Key="temperatureHeight">
+		</GridLength>
+		<GridLength x:Key="suspensionHeight">
+		</GridLength>
 	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
@@ -38,6 +42,9 @@
 			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
 			<RowDefinition Height="{DynamicResource basicsHeight}"></RowDefinition>
 			<RowDefinition Height="{DynamicResource slipHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource temperatureHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource suspensionHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource suspensionHeight}"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -66,5 +73,8 @@
 		<WpfPlot Name="plotFrameSteer" Grid.Row="5" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
 		<WpfPlot Name="plotFrameRPM" Grid.Row="6" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
 		<WpfPlot Name="plotFrameSlip" Grid.Row="7" Grid.Column="0" Visibility="{DynamicResource slipVisibility}"/>
+		<WpfPlot Name="plotFrameTyreTemp" Grid.Row="8" Grid.Column="0" Visibility="{DynamicResource temperatureVisibility}"/>
+		<WpfPlot Name="plotFrameTyrePressure" Grid.Row="9" Grid.Column="0" Visibility="{DynamicResource suspensionVisibility}"/>
+		<WpfPlot Name="plotFrameRideHeight" Grid.Row="10" Grid.Column="0" Visibility="{DynamicResource suspensionVisibility}"/>
 	</Grid>
 </Window>

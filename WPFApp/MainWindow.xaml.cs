@@ -34,6 +34,17 @@ namespace AssettoCorsaTelemetryApp
 	public struct WheelDoubles
 	{
 		public double[] FL, FR, RL, RR;
+
+		public void InitializeToZero()
+		{
+			for(int i=0; i< FL.Length; i++)
+			{
+				FL[i] = 0;
+				FR[i] = 0;
+				RL[i] = 0;
+				RR[i] = 0;
+			}
+		}
 	}
 
 	/// <summary>
@@ -69,6 +80,41 @@ namespace AssettoCorsaTelemetryApp
 			RR = new double[bufferSize]
 		};
 
+		WheelDoubles dataTyreTempI= new WheelDoubles()
+		{
+			FL = new double[bufferSize],
+			FR = new double[bufferSize],
+			RL = new double[bufferSize],
+			RR = new double[bufferSize]
+		};
+
+		WheelDoubles dataTyreTempM = new WheelDoubles()
+		{
+			FL = new double[bufferSize],
+			FR = new double[bufferSize],
+			RL = new double[bufferSize],
+			RR = new double[bufferSize]
+		};
+
+		WheelDoubles dataTyreTempO = new WheelDoubles()
+		{
+			FL = new double[bufferSize],
+			FR = new double[bufferSize],
+			RL = new double[bufferSize],
+			RR = new double[bufferSize]
+		};
+
+		WheelDoubles dataPressures = new WheelDoubles()
+		{
+			FL = new double[bufferSize],
+			FR = new double[bufferSize],
+			RL = new double[bufferSize],
+			RR = new double[bufferSize]
+		};
+
+		double[] dataRideHeightF = new double[bufferSize];
+		double[] dataRideHeightR = new double[bufferSize];
+
 		int index = 0;
 		int[] dataLap = new int[bufferSize];
 		List<int> beginLapIndices = new List<int>();
@@ -94,7 +140,7 @@ namespace AssettoCorsaTelemetryApp
 			InitializeComponent();
 			UpdateVisibility();
 
-			plots = new TracePlot[9];
+			plots = new TracePlot[27];
 			plots[0] = new TracePlot()
 			{
 				plotFrame = plotFrameGas,
@@ -162,6 +208,132 @@ namespace AssettoCorsaTelemetryApp
 				name = "RPM",
 				yLims = new double[] { -0.2, 30_000},
 			};
+			plots[9] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempI.FL, label: "FL I", color: fl_colour, markerSize: 0, lineStyle : LineStyle.Dot),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[10] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempI.FR, label: "FR I", color: fr_colour, markerSize: 0, lineStyle: LineStyle.Dot),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[11] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempI.RL, label: "RL I", color: rl_colour, markerSize: 0, lineStyle: LineStyle.Dot),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[12] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempI.RR, label: "RR I", color: rr_colour, markerSize: 0, lineStyle: LineStyle.Dot),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[13] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempM.FL, label: "FL M", color: fl_colour, markerSize: 0, lineStyle: LineStyle.Dash),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[14] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempM.FR, label: "FR M", color: fr_colour, markerSize: 0, lineStyle: LineStyle.Dash),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[15] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempM.RL, label: "RL M", color: rl_colour, markerSize: 0, lineStyle: LineStyle.Dash),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[16] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempM.RR, label: "RR M", color: rr_colour, markerSize: 0, lineStyle: LineStyle.Dash),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[17] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempO.FL, label: "FL O", color: fl_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[18] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempO.FR, label: "FR O", color: fr_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[19] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempO.RL, label: "RL O", color: rl_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[20] = new TracePlot()
+			{
+				plotFrame = plotFrameTyreTemp,
+				sigplot = plotFrameTyreTemp.plt.PlotSignal(dataTyreTempO.RR, label: "RR O", color: rr_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Tyre Temperature (Celsius)",
+				yLims = new double[] { 20, 180 },
+			};
+			plots[21] = new TracePlot()
+			{
+				plotFrame = plotFrameTyrePressure,
+				sigplot = plotFrameTyrePressure.plt.PlotSignal(dataPressures.FL, label: "FL", color: fl_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Tyre Pressure (PSI)",
+				yLims = new double[] { 0, 60 },
+			};
+			plots[22] = new TracePlot()
+			{
+				plotFrame = plotFrameTyrePressure,
+				sigplot = plotFrameTyrePressure.plt.PlotSignal(dataPressures.FR, label: "FR", color: fr_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Tyre Pressure (PSI)",
+				yLims = new double[] { 0, 60 },
+			};
+			plots[23] = new TracePlot()
+			{
+				plotFrame = plotFrameTyrePressure,
+				sigplot = plotFrameTyrePressure.plt.PlotSignal(dataPressures.RL, label: "RL", color: rl_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Tyre Pressure (PSI)",
+				yLims = new double[] { 0, 60 },
+			};
+			plots[24] = new TracePlot()
+			{
+				plotFrame = plotFrameTyrePressure,
+				sigplot = plotFrameTyrePressure.plt.PlotSignal(dataPressures.RR, label: "RR", color: rr_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Tyre Pressure (PSI)",
+				yLims = new double[] { 0, 60 },
+			};
+			plots[25] = new TracePlot()
+			{
+				plotFrame = plotFrameRideHeight,
+				sigplot = plotFrameRideHeight.plt.PlotSignal(dataRideHeightF, label: "F", color: fl_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Ride Height (Physics-Engine Units)",
+				yLims = new double[] { 0, 0.3 },
+			};
+			plots[26] = new TracePlot()
+			{
+				plotFrame = plotFrameRideHeight,
+				sigplot = plotFrameRideHeight.plt.PlotSignal(dataRideHeightR, label: "R", color: rl_colour, markerSize: 0, lineStyle: LineStyle.Solid),
+				name = "Ride Height (Physics-Engine Units)",
+				yLims = new double[] { 0, 0.3 },
+			};
 
 			foreach (TracePlot curr in plots)
 			{
@@ -180,6 +352,11 @@ namespace AssettoCorsaTelemetryApp
 			plotFrameGear.plt.YTicks(Enumerable.Range(-1, 12).Select(i => (double)i).ToArray(), gearYTicks);
 
 			plotFrameSlip.plt.Legend(location: legendLocation.upperRight);
+			plotFrameTyreTemp.plt.Legend(location: legendLocation.upperRight);
+			plotFrameTyrePressure.plt.Legend(location: legendLocation.lowerRight);
+			plotFrameRideHeight.plt.Legend(location: legendLocation.upperRight);
+
+			plotFrameTyreTemp.plt.PlotAnnotation("Interior: Dotted\nMiddle: Dashed\nOuter: Solid");
 
 			plotFrameSteer.plt.PlotHLine(0, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
 
@@ -222,12 +399,13 @@ namespace AssettoCorsaTelemetryApp
 				dataGear[i] = 0;
 				dataSteer[i] = 0;
 				dataLap[i] = 0;
-				dataSlip.FL[i] = 0;
-				dataSlip.FR[i] = 0;
-				dataSlip.RL[i] = 0;
-				dataSlip.RR[i] = 0;
 				dataRPM[i] = 0;
 			}
+
+			dataSlip.InitializeToZero();
+			dataTyreTempI.InitializeToZero();
+			dataTyreTempM.InitializeToZero();
+			dataTyreTempO.InitializeToZero();
 
 			foreach (var curr in plots)
 			{
@@ -315,6 +493,29 @@ namespace AssettoCorsaTelemetryApp
 			dataSlip.RR[index] = physics.wheelSlip[3];
 			dataRPM[index] = physics.rpms;
 
+			dataTyreTempI.FL[index] = physics.tyreTempI[0];
+			dataTyreTempI.FR[index] = physics.tyreTempI[1];
+			dataTyreTempI.RL[index] = physics.tyreTempI[2];
+			dataTyreTempI.RR[index] = physics.tyreTempI[3];
+
+			dataTyreTempM.FL[index] = physics.tyreTempM[0];
+			dataTyreTempM.FR[index] = physics.tyreTempM[1];
+			dataTyreTempM.RL[index] = physics.tyreTempM[2];
+			dataTyreTempM.RR[index] = physics.tyreTempM[3];
+
+			dataTyreTempO.FL[index] = physics.tyreTempO[0];
+			dataTyreTempO.FR[index] = physics.tyreTempO[1];
+			dataTyreTempO.RL[index] = physics.tyreTempO[2];
+			dataTyreTempO.RR[index] = physics.tyreTempO[3];
+
+			dataPressures.FL[index] = physics.wheelsPressure[0];
+			dataPressures.FR[index] = physics.wheelsPressure[1];
+			dataPressures.RL[index] = physics.wheelsPressure[2];
+			dataPressures.RR[index] = physics.wheelsPressure[3];
+
+			dataRideHeightF[index] = physics.rideHeight[0];
+			dataRideHeightR[index] = physics.rideHeight[1];
+
 			if (index > 0)
 			{
 				if (dataLap[index] > dataLap[index - 1])
@@ -386,6 +587,8 @@ namespace AssettoCorsaTelemetryApp
 
 			Resources["basicsHeight"] = basics.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
 			Resources["slipHeight"] = slip.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+			Resources["temperatureHeight"] = temperatures.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+			Resources["suspensionHeight"] = suspension.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
 		}
 
 		private void checkbox_Click(object sender, RoutedEventArgs e)

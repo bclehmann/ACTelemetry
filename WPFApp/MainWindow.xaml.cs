@@ -439,6 +439,7 @@ namespace AssettoCorsaTelemetryApp
 			}
 			foreach (TracePlot curr in plots)
 			{
+				curr.sigplot.minRenderIndex = beginIndex;
 				curr.sigplot.maxRenderIndex = index;
 
 				if (incrementedLap && curr.sigplotLastLap != null)

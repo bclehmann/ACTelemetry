@@ -1,4 +1,4 @@
-# AssettoCorsaTelemetryApp
+# ACTelemetry
 
 A simple WPF app to give you telemetry from Assetto Corsa. Just press start when you want to start and it will create graphs like this:
 

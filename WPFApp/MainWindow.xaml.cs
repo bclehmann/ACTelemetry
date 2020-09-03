@@ -52,7 +52,7 @@ namespace AssettoCorsaTelemetryApp
 	/// </summary>
 	public partial class MainWindow : Window, IDisposable
 	{
-		const int sleepTime = 20;
+		int sleepTime;
 		const int renderSleepTime = 500;
 		const int plotSpanTime = 30_000;
 		const int bufferSize = 500_000;
@@ -139,6 +139,7 @@ namespace AssettoCorsaTelemetryApp
 		{
 			InitializeComponent();
 			UpdateVisibility();
+			sleepTime = AppConfigSingleton.GetInstance().config.samplingInterval;
 
 			plots = new TracePlot[27];
 			plots[0] = new TracePlot()

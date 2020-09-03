@@ -1,4 +1,5 @@
-﻿using ScottPlot;
+﻿using AssettoCorsaTelemetryApp.Dialogs;
+using ScottPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -52,7 +53,7 @@ namespace AssettoCorsaTelemetryApp
 	/// </summary>
 	public partial class MainWindow : Window, IDisposable
 	{
-		const int sleepTime = 20;
+		int sleepTime;
 		const int renderSleepTime = 500;
 		const int plotSpanTime = 30_000;
 		const int bufferSize = 500_000;
@@ -70,6 +71,8 @@ namespace AssettoCorsaTelemetryApp
 		double[] dataGearLast = new double[bufferSize / 50];
 		double[] dataSteer = new double[bufferSize];
 		double[] dataSteerLast = new double[bufferSize / 50];
+		double[] dataClutch = new double[bufferSize];
+		double[] dataClutchLast = new double[bufferSize / 50];
 		double[] dataRPM = new double[bufferSize];
 
 		WheelDoubles dataSlip = new WheelDoubles()
@@ -139,8 +142,9 @@ namespace AssettoCorsaTelemetryApp
 		{
 			InitializeComponent();
 			UpdateVisibility();
+			sleepTime = AppConfigSingleton.GetInstance().config.samplingInterval;
 
-			plots = new TracePlot[27];
+			plots = new TracePlot[28];
 			plots[0] = new TracePlot()
 			{
 				plotFrame = plotFrameGas,
@@ -163,7 +167,7 @@ namespace AssettoCorsaTelemetryApp
 				sigplot = plotFrameGear.plt.PlotSignal(dataGear, color: System.Drawing.Color.Black, markerSize: 0),
 				sigplotLastLap = plotFrameGear.plt.PlotSignal(dataGearLast, color: System.Drawing.Color.FromArgb(100, 0, 0, 0), markerSize: 0),
 				name = "Gear",
-				yLims = new double[] { -1.2, 10.2 }, //This'll be fun if someone has a car with 17 gears
+				yLims = new double[] { -1.2, 10.2 }, 
 			};
 			plots[3] = new TracePlot()
 			{
@@ -334,6 +338,14 @@ namespace AssettoCorsaTelemetryApp
 				name = "Ride Height (Physics-Engine Units)",
 				yLims = new double[] { 0, 0.3 },
 			};
+			plots[27] = new TracePlot()
+			{
+				plotFrame = plotFrameClutch,
+				sigplot = plotFrameClutch.plt.PlotSignal(dataClutch, color: System.Drawing.Color.FromArgb(255, 0, 0, 255), markerSize: 0),
+				sigplotLastLap = plotFrameClutch.plt.PlotSignal(dataClutch, color: System.Drawing.Color.FromArgb(100, 0, 0, 255), markerSize: 0),
+				name = "Clutch",
+				yLims = new double[] { -0.2, 1.2 },
+			};
 
 			foreach (TracePlot curr in plots)
 			{
@@ -360,7 +372,11 @@ namespace AssettoCorsaTelemetryApp
 
 			plotFrameSteer.plt.PlotHLine(0, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
 
+			UpdateLoggingFrequency();
+		}
 
+		private void UpdateLoggingFrequency()
+		{
 			SamplingRate_TextBlock.Text = $"Logging Frequency: {1 / (sleepTime / 1000f):f3} Hz";
 		}
 
@@ -399,6 +415,7 @@ namespace AssettoCorsaTelemetryApp
 				dataGear[i] = 0;
 				dataSteer[i] = 0;
 				dataLap[i] = 0;
+				dataClutch[i] = 0;
 				dataRPM[i] = 0;
 			}
 
@@ -492,6 +509,7 @@ namespace AssettoCorsaTelemetryApp
 			dataSlip.FR[index] = physics.wheelSlip[1];
 			dataSlip.RL[index] = physics.wheelSlip[2];
 			dataSlip.RR[index] = physics.wheelSlip[3];
+			dataClutch[index] = 1 - physics.clutch; //Assetto Corsa reports clutch engagement, but the user cares about the pedal position
 			dataRPM[index] = physics.rpms;
 
 			dataTyreTempI.FL[index] = physics.tyreTempI[0];
@@ -554,10 +572,10 @@ namespace AssettoCorsaTelemetryApp
 			if (result == true)
 			{ //Nullable
 				StringBuilder output = new StringBuilder();
-				output.Append("gas,brake,gear,steer,slip_fl,slip_fr,slip_rl,slip_rr,temp_fl_i,temp_fr_i,temp_rl_i,temp_rr_i,templ_fl_m,temp_fr_m,temp_rl_m,temp_rr_m,temp_fl_o,temp_fr_o,temp_rl_o,femp_rr_o,pressure_fl,pressure_fr,pressure_rl,pressure_rr,rideHeight_f,rideHeight_,lap\n");
+				output.Append("gas,brake,gear,steer,clutch,slip_fl,slip_fr,slip_rl,slip_rr,temp_fl_i,temp_fr_i,temp_rl_i,temp_rr_i,templ_fl_m,temp_fr_m,temp_rl_m,temp_rr_m,temp_fl_o,temp_fr_o,temp_rl_o,femp_rr_o,pressure_fl,pressure_fr,pressure_rl,pressure_rr,rideHeight_f,rideHeight_,lap\n");
 				for (int i = 0; i < index; i++)
 				{
-					output.Append($"{dataGas[i]},{dataBrake[i]},{dataGear[i]},{dataSteer[i]},{dataSlip.FL[i]},{dataSlip.FR[i]},{dataSlip.RL[i]},{dataSlip.RR[i]}" +
+					output.Append($"{dataGas[i]},{dataBrake[i]},{dataGear[i]},{dataSteer[i]},{dataClutch[i]},{dataSlip.FL[i]},{dataSlip.FR[i]},{dataSlip.RL[i]},{dataSlip.RR[i]}" +
 						$",{dataTyreTempI.FL[i]},{dataTyreTempI.FR[i]},{dataTyreTempI.RL[i]},{dataTyreTempI.RR[i]},{dataTyreTempM.FL[i]},{dataTyreTempM.FR[i]},{dataTyreTempM.RL[i]},{dataTyreTempM.RR[i]}" +
 						$",{dataTyreTempO.FL[i]},{dataTyreTempO.FR[i]},{dataTyreTempO.RL[i]},{dataTyreTempO.RR[i]},{dataPressures.FL[i]},{dataPressures.FR[i]},{dataPressures.RL[i]},{dataPressures.RR[i]}" +
 						$",{dataRideHeightF[i]},{dataRideHeightR[i]},{dataLap[i] + 1}\n");
@@ -588,16 +606,32 @@ namespace AssettoCorsaTelemetryApp
 			Resources["slipVisibility"] = slip.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
 			Resources["temperatureVisibility"] = temperatures.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
 			Resources["suspensionVisibility"] = suspension.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
+			Resources["clutchVisibility"] = clutch.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
 
 			Resources["basicsHeight"] = basics.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
 			Resources["slipHeight"] = slip.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
 			Resources["temperatureHeight"] = temperatures.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
 			Resources["suspensionHeight"] = suspension.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+			Resources["clutchHeight"] = clutch.IsChecked ?? false ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
 		}
 
 		private void checkbox_Click(object sender, RoutedEventArgs e)
 		{
 			UpdateVisibility();
+		}
+
+		private void SetSamplingRate_Button_Click(object sender, RoutedEventArgs e)
+		{
+			var dlg = new SamplingRateDialog();
+			if(dlg.ShowDialog() ?? false)
+			{
+				var cfg = AppConfigSingleton.GetInstance();
+				cfg.config.samplingInterval = 1000 / ((int)dlg.SamplingRate.Value);
+				sleepTime = cfg.config.samplingInterval;
+				cfg.ExportToCfg();
+				UpdateLoggingFrequency();
+			}
+
 		}
 	}
 }

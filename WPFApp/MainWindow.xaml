@@ -23,6 +23,9 @@
 		<Visibility x:Key="suspensionVisibility">
 			Visible
 		</Visibility>
+		<Visibility x:Key="clutchVisibility">
+			Visible
+		</Visibility>
 		<GridLength x:Key="basicsHeight">
 		</GridLength>
 		<GridLength x:Key="slipHeight">
@@ -30,6 +33,8 @@
 		<GridLength x:Key="temperatureHeight">
 		</GridLength>
 		<GridLength x:Key="suspensionHeight">
+		</GridLength>
+		<GridLength x:Key="clutchHeight">
 		</GridLength>
 	</Window.Resources>
 	<Grid>
@@ -45,6 +50,7 @@
 			<RowDefinition Height="{DynamicResource temperatureHeight}"></RowDefinition>
 			<RowDefinition Height="{DynamicResource suspensionHeight}"></RowDefinition>
 			<RowDefinition Height="{DynamicResource suspensionHeight}"></RowDefinition>
+			<RowDefinition Height="{DynamicResource clutchHeight}"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
@@ -54,6 +60,7 @@
 			<Button Click="StartLogging_Click" DockPanel.Dock="Left" Margin="2, 0, 5, 0">Start</Button>
 			<Button Click="StopLogging_Click" DockPanel.Dock="Left" Margin="2, 0, 5, 0">Stop</Button>
 			<TextBlock x:Name="SamplingRate_TextBlock" Margin="2,0,5,0" DockPanel.Dock="Left"/>
+			<Button x:Name="SetSamplingRate_Button" Margin="2,0,5,0" DockPanel.Dock="Left" Click="SetSamplingRate_Button_Click" >Set Sampling Rate</Button>
 			<Button Click="PageLink_Click" Margin="2, 0, 5, 0" DockPanel.Dock="Right">
 				<TextBlock Text="Project Page"/>
 			</Button>
@@ -65,6 +72,7 @@
 			<CheckBox Name="slip" Click="checkbox_Click">Wheel Slip</CheckBox>
 			<CheckBox Name="temperatures" Click="checkbox_Click">Temperatures</CheckBox>
 			<CheckBox Name="suspension" Click="checkbox_Click">Suspension</CheckBox>
+			<CheckBox Name="clutch" Click="checkbox_Click">Clutch Trace</CheckBox>
 		</StackPanel>
 
 		<WpfPlot Name="plotFrameGas" Grid.Row="2" Grid.Column="0" Visibility="{DynamicResource basicsVisibility}"/>
@@ -76,5 +84,6 @@
 		<WpfPlot Name="plotFrameTyreTemp" Grid.Row="8" Grid.Column="0" Visibility="{DynamicResource temperatureVisibility}"/>
 		<WpfPlot Name="plotFrameTyrePressure" Grid.Row="9" Grid.Column="0" Visibility="{DynamicResource suspensionVisibility}"/>
 		<WpfPlot Name="plotFrameRideHeight" Grid.Row="10" Grid.Column="0" Visibility="{DynamicResource suspensionVisibility}"/>
+		<WpfPlot Name="plotFrameClutch" Grid.Row="11" Grid.Column="0" Visibility="{DynamicResource clutchVisibility}"/>
 	</Grid>
 </Window>

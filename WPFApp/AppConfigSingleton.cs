@@ -6,10 +6,14 @@ namespace AssettoCorsaTelemetryApp
 {
 	public class AppConfigSingleton
 	{
+		public static readonly string appdataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+		public static readonly string cfgPath = appdataDirectory + "/ACTelemetry/config.json";
+
 		private static AppConfigSingleton instance;
 		private static readonly object _lock = new object();
 
 		public AppConfig config;
+
 
 		private AppConfigSingleton() { }
 		public static AppConfigSingleton GetInstance()
@@ -25,15 +29,25 @@ namespace AssettoCorsaTelemetryApp
 			return instance;
 		}
 
-		public void ExportToCfg(string path)
+		public void ExportToCfg()
 		{
 			string json = JsonSerializer.Serialize(config);
-			File.WriteAllText(path, json);
+			File.WriteAllText(cfgPath, json);
 		}
 
-		public void ImportFromCfg(string path)
+		public void ImportFromCfg()
 		{
-			config = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(path));
+			if (System.IO.File.Exists(AppConfigSingleton.cfgPath))
+			{
+				config = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(cfgPath));
+			}
+			else {
+				Directory.CreateDirectory(appdataDirectory + "/ACTelemetry");
+				File.Create(cfgPath).Close();
+				config = new AppConfig();
+				config.samplingInterval = 20;
+				ExportToCfg();
+			}
 		}
 	}
 

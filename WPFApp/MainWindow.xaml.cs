@@ -1,4 +1,5 @@
-﻿using ScottPlot;
+﻿using AssettoCorsaTelemetryApp.Dialogs;
+using ScottPlot;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -361,7 +362,11 @@ namespace AssettoCorsaTelemetryApp
 
 			plotFrameSteer.plt.PlotHLine(0, System.Drawing.Color.Gray, lineStyle: LineStyle.Dash);
 
+			UpdateLoggingFrequency();
+		}
 
+		private void UpdateLoggingFrequency()
+		{
 			SamplingRate_TextBlock.Text = $"Logging Frequency: {1 / (sleepTime / 1000f):f3} Hz";
 		}
 
@@ -599,6 +604,20 @@ namespace AssettoCorsaTelemetryApp
 		private void checkbox_Click(object sender, RoutedEventArgs e)
 		{
 			UpdateVisibility();
+		}
+
+		private void SetSamplingRate_Button_Click(object sender, RoutedEventArgs e)
+		{
+			var dlg = new SamplingRateDialog();
+			if(dlg.ShowDialog() ?? false)
+			{
+				var cfg = AppConfigSingleton.GetInstance();
+				cfg.config.samplingInterval = 1000 / ((int)dlg.SamplingRate.Value);
+				sleepTime = cfg.config.samplingInterval;
+				cfg.ExportToCfg();
+				UpdateLoggingFrequency();
+			}
+
 		}
 	}
 }

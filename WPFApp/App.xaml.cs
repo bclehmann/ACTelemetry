@@ -16,21 +16,11 @@ namespace AssettoCorsaTelemetryApp
 	/// </summary>
 	public partial class App : Application
 	{
-		private static readonly string appdataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-		private static readonly string cfgPath = appdataDirectory + "/ACTelemetry/config.json";
 		private AppConfigSingleton configWrapper { get; set; }
 		App()
 		{
 			configWrapper = AppConfigSingleton.GetInstance();
-			if (System.IO.File.Exists(cfgPath))
-			{
-				configWrapper.ImportFromCfg(cfgPath);
-			}
-			else
-			{
-				configWrapper.config.samplingInterval = 20;
-				configWrapper.ExportToCfg(cfgPath);
-			}
+			configWrapper.ImportFromCfg();
 		}
 	}
 }

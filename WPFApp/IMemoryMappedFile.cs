@@ -6,6 +6,6 @@ namespace AssettoCorsaTelemetryApp
 {
 	public interface IMemoryMappedFile<T> : IDisposable
 	{
-		 T GetData();
+		T GetData();
 	}
 }

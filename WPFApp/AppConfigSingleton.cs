@@ -41,7 +41,8 @@ namespace AssettoCorsaTelemetryApp
 			{
 				config = JsonSerializer.Deserialize<AppConfig>(File.ReadAllText(cfgPath));
 			}
-			else {
+			else
+			{
 				Directory.CreateDirectory(appdataDirectory + "/ACTelemetry");
 				File.Create(cfgPath).Close();
 				config = new AppConfig();

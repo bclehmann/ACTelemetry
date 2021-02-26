@@ -10,7 +10,7 @@ struct basics {
 	float steering_angle;
 };
 
-struct PhysicsMemoryMap
+struct physics_mmap
 {
 	int packetId = 0;
 	float gas = 0;
@@ -102,7 +102,7 @@ enum AC_FLAG_TYPE {
 	AC_PENALTY_FLAG
 };
 
-struct GraphicsMemoryMap {
+struct graphics_mmap {
 	int packetId = 0;
 	AC_STATUS status = AC_OFF;
 	AC_SESSION_TYPE session = AC_PRACTICE;
@@ -135,7 +135,7 @@ struct GraphicsMemoryMap {
 	float windDirection = 0;
 };
 
-struct StaticsMemoryMap {
+struct statics_mmap {
 	wchar_t smVersion[15];
 	wchar_t acVersion[15];
 	int numberOfSessions = 0;
@@ -180,14 +180,14 @@ struct StaticsMemoryMap {
 	int PitWindowEnd;
 };
 
-dllpub PhysicsMemoryMap* get_physics();
+dllpub physics_mmap* get_physics();
 dllpub void initialize_physics();
 dllpub void free_physics();
 
-dllpub GraphicsMemoryMap* get_graphics();
+dllpub graphics_mmap* get_graphics();
 dllpub void initialize_graphics();
 dllpub void free_graphics();
 
-dllpub StaticsMemoryMap* get_statics();
+dllpub statics_mmap* get_statics();
 dllpub void initialize_statics();
 dllpub void free_statics();

@@ -1,68 +1,71 @@
 #include "pch.h"
 #include "Backend.h"
 
+#include <memory>
 #include <WinBase.h>
 
 HANDLE physics_mfile;
 HANDLE graphics_mfile;
 HANDLE statics_mfile;
-unsigned char* physics_buffer;
-unsigned char* graphics_buffer;
-unsigned char* statics_buffer;
+physics_mmap* physics_buffer;
+graphics_mmap* graphics_buffer;
+statics_mmap* statics_buffer;
 
-void initialize_physics() {
-	physics_mfile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READONLY, 0, 10 * 1024, TEXT("Local\\acpmf_physics"));
-	if (!physics_mfile) {
+template<class T>
+void initialize_mmap(HANDLE& handle, T*& buffer, LPCWSTR path) {
+	handle = CreateFileMappingW(INVALID_HANDLE_VALUE, NULL, PAGE_READONLY, 0, 10 * 1024, path);
+	if (handle == nullptr) {
 		throw;
 	}
-	physics_buffer = (unsigned char*)MapViewOfFile(physics_mfile, FILE_MAP_READ, 0, 0, sizeof(PhysicsMemoryMap));
+
+	buffer = reinterpret_cast<T*>(MapViewOfFile(handle, FILE_MAP_READ, 0, 0, sizeof(T)));
 }
 
-PhysicsMemoryMap* get_physics()
+template<class T>
+void free_mmap(HANDLE& handle, T*& buffer) {
+	UnmapViewOfFile(buffer);
+	CloseHandle(handle);
+}
+
+void initialize_physics() {
+	initialize_mmap<physics_mmap>(physics_mfile, physics_buffer, TEXT("Local\\acpmf_physics"));
+}
+
+physics_mmap* get_physics()
 {
-	return (PhysicsMemoryMap*)physics_buffer;
+	return physics_buffer;
 }
 
 void free_physics()
 {
-	UnmapViewOfFile(physics_buffer);
-	CloseHandle(physics_mfile);
+	free_mmap<physics_mmap>(physics_mfile, physics_buffer);
 }
 
 void initialize_graphics() {
-	graphics_mfile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READONLY, 0, 10 * 1024, TEXT("Local\\acpmf_graphics"));
-	if (!graphics_mfile) {
-		throw;
-	}
-	graphics_buffer = (unsigned char*)MapViewOfFile(graphics_mfile, FILE_MAP_READ, 0, 0, sizeof(GraphicsMemoryMap));
+	initialize_mmap<graphics_mmap>(graphics_mfile, graphics_buffer, TEXT("Local\\acpmf_graphics"));
 }
 
-GraphicsMemoryMap* get_graphics()
+graphics_mmap* get_graphics()
 {
-	return (GraphicsMemoryMap*)graphics_buffer;
+	return graphics_buffer;
 }
 
 void free_graphics()
 {
-	UnmapViewOfFile(graphics_buffer);
-	CloseHandle(graphics_mfile);
+	free_mmap<graphics_mmap>(graphics_mfile, graphics_buffer);
 }
+
 
 void initialize_statics() {
-	statics_mfile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READONLY, 0, 10 * 1024, TEXT("Local\\acpmf_static"));
-	if (!statics_mfile) {
-		throw;
-	}
-	statics_buffer = (unsigned char*)MapViewOfFile(statics_mfile, FILE_MAP_READ, 0, 0, sizeof(StaticsMemoryMap));
+	initialize_mmap<statics_mmap>(statics_mfile, statics_buffer, TEXT("Local\\acpmf_static"));
 }
 
-StaticsMemoryMap* get_statics()
+statics_mmap* get_statics()
 {
-	return (StaticsMemoryMap*)statics_buffer;
+	return statics_buffer;
 }
 
 void free_statics()
 {
-	UnmapViewOfFile(statics_buffer);
-	CloseHandle(statics_mfile);
+	free_mmap<statics_mmap>(statics_mfile, statics_buffer);
 }

@@ -10,7 +10,7 @@ namespace AssettoCorsaTelemetryApp
 		public StaticsData()
 		{
 			InitializeStatics();
-			staticsPtr = GetGraphicsPointer();
+			staticsPtr = GetStaticsPointer();
 		}
 
 		private IntPtr staticsPtr = IntPtr.Zero;
@@ -35,7 +35,7 @@ namespace AssettoCorsaTelemetryApp
 #else
 		[DllImport(@"C:\Users\benny\source\repos\AssettoCorsaTelemetryApp\x64\Debug\Backend.dll", EntryPoint = "get_statics")]
 #endif
-		private static extern IntPtr GetGraphicsPointer();
+		private static extern IntPtr GetStaticsPointer();
 
 		public StaticsMemoryMap GetData()
 		{

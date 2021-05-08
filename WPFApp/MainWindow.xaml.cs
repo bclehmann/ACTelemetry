@@ -543,13 +543,13 @@ namespace AssettoCorsaTelemetryApp
 			if (result == true)
 			{ //Nullable
 				StringBuilder output = new StringBuilder();
-				output.Append("gas,brake,gear,steer,clutch,slip_fl,slip_fr,slip_rl,slip_rr,temp_fl_i,temp_fr_i,temp_rl_i,temp_rr_i,templ_fl_m,temp_fr_m,temp_rl_m,temp_rr_m,temp_fl_o,temp_fr_o,temp_rl_o,femp_rr_o,pressure_fl,pressure_fr,pressure_rl,pressure_rr,rideHeight_f,rideHeight_r,lap,unix_timestamp_milliseconds(UTC)\n");
+				output.Append("gas,brake,gear,steer,clutch,slip_fl,slip_fr,slip_rl,slip_rr,temp_fl_i,temp_fr_i,temp_rl_i,temp_rr_i,templ_fl_m,temp_fr_m,temp_rl_m,temp_rr_m,temp_fl_o,temp_fr_o,temp_rl_o,femp_rr_o,pressure_fl,pressure_fr,pressure_rl,pressure_rr,rideHeight_f,rideHeight_r,rpm,lap,unix_timestamp_milliseconds(UTC)\n");
 				for (int i = 0; i < index; i++)
 				{
 					output.Append($"{dataGas[i]},{dataBrake[i]},{dataGear[i]},{dataSteer[i]},{dataClutch[i]},{dataSlip.FL[i]},{dataSlip.FR[i]},{dataSlip.RL[i]},{dataSlip.RR[i]}" +
 						$",{dataTyreTempI.FL[i]},{dataTyreTempI.FR[i]},{dataTyreTempI.RL[i]},{dataTyreTempI.RR[i]},{dataTyreTempM.FL[i]},{dataTyreTempM.FR[i]},{dataTyreTempM.RL[i]},{dataTyreTempM.RR[i]}" +
 						$",{dataTyreTempO.FL[i]},{dataTyreTempO.FR[i]},{dataTyreTempO.RL[i]},{dataTyreTempO.RR[i]},{dataPressures.FL[i]},{dataPressures.FR[i]},{dataPressures.RL[i]},{dataPressures.RR[i]}" +
-						$",{dataRideHeightF[i]},{dataRideHeightR[i]},{dataLap[i] + 1},{dataTimestamp[i]}\n");
+						$",{dataRideHeightF[i]},{dataRideHeightR[i]},{dataRPM[i]},{dataLap[i] + 1},{dataTimestamp[i]}\n");
 				}
 
 				using (StreamWriter writer = new StreamWriter(dlg.FileName))
